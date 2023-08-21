@@ -58,6 +58,12 @@ export default function Person() {
             </div>
         ) :
             <MainLayout>
+                 <Head>
+                        <title>Persons</title>
+                        <meta name="description" content="Tmdb movies info" />
+                        <meta name="viewport" content="width=device-width, initial-scale=1" />
+                        <link rel="icon" href="/favicon.ico" />
+                    </Head>
                 <h5>Popular Persons</h5>
                 <Row gutter={[10,10]}>
                     {persons && persons.length > 0 ? persons.map((person) => {

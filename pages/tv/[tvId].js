@@ -146,6 +146,12 @@ export default function MovieDetails() {
 
     return (<div className="px-3">
         <MainLayout>
+            <Head>
+                <title>TV Show</title>
+                <meta name="description" content="Tmdb movies info" />
+                <meta name="viewport" content="width=device-width, initial-scale=1" />
+                <link rel="icon" href="/favicon.ico" />
+            </Head>
             {loading ? (
                 <div className="position-absolute top-50 start-50">
                     <Spin size="large" className="">
@@ -235,7 +241,7 @@ export default function MovieDetails() {
 
                             <div className="">
                                 <h5 className="fw-bold">Keywords</h5>
-                                {keywords?.length  ? keywords?.map((keyword) => (
+                                {keywords?.length ? keywords?.map((keyword) => (
                                     <Button type="default rounded-3 m-1 bg-dark text-white" key={keyword.id}
                                         onClick={() => { router.push(`/keyword/${keyword.id}-${keyword.name}-tv`) }}>
                                         {keyword.name}

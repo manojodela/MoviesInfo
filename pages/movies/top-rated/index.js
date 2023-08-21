@@ -182,6 +182,12 @@ export default function TopRatedMovies() {
                 </div>
             ) :
                 <Layout>
+                     <Head>
+                        <title>Top Rated Movies</title>
+                        <meta name="description" content="Tmdb movies info" />
+                        <meta name="viewport" content="width=device-width, initial-scale=1" />
+                        <link rel="icon" href="/favicon.ico" />
+                    </Head>
                     <h5 className="p-3 font-family fw-bold">Top Rated Movies</h5>
                     <Row gutter={[10, 10]} justify={"space-around"} align={"stretch"}>
                         <Col lg={5}>
