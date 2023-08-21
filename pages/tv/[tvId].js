@@ -9,6 +9,7 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { BookOutlined, FacebookFilled, GooglePlusCircleFilled, HeartOutlined, InstagramFilled, StarOutlined, TwitterCircleFilled, UnorderedListOutlined } from '@ant-design/icons';
 import Link from "next/link";
+import Head from "next/head";
 
 export default function MovieDetails() {
     const [tvData, setTvData] = useState();
@@ -146,7 +147,6 @@ export default function MovieDetails() {
 
     return (<div className="px-3">
         <MainLayout>
-
             {loading ? (
                 <div className="position-absolute top-50 start-50">
                     <Spin size="large" className="">

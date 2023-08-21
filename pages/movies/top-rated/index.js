@@ -6,6 +6,7 @@ import Layout from "@/components/layout";
 import { useRouter } from "next/router";
 import { TOKEN } from "@/constants";
 import axios from "axios";
+import Head from "next/head";
 
 const { Option } = Select;
 const { Panel } = Collapse;

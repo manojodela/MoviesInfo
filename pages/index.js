@@ -11,6 +11,7 @@ import axios from "axios";
 import moment from "moment";
 import { debounce } from "lodash";
 import StateContext from "@/components/AppContext";
+import Head from "next/head";
 
 const { Option } = Select;
 const { Panel } = Collapse;

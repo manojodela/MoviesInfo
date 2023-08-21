@@ -5,6 +5,7 @@ import { TOKEN } from "@/constants";
 import MainLayout from "@/components/layout";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import Head from "next/head";
 
 export default function Person() {
     const [persons, setPersons] = useState();
