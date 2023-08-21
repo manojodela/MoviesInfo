@@ -1,0 +1,3 @@
+export const TOKEN = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJjZDkxMTM3ODFhMzdkOTIwZWNkMTQ0YWUyOThjMzRlOCIsInN1YiI6IjYzOWMwZDM4MTg4NjRiMDA3ZGRkMjA4OCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.0KP839F96O7Vg-bpFhx57Emj5lQ2k_yzhDBcp-_pM8Q"
+
+export const PROFILE_PATH = 'https://www.themoviedb.org/t/p/w440_and_h660_face'
