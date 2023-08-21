@@ -146,12 +146,7 @@ export default function MovieDetails() {
 
     return (<div className="px-3">
         <MainLayout>
-            <Head>
-                <title>TV Show</title>
-                <meta name="description" content="Tmdb movies info" />
-                <meta name="viewport" content="width=device-width, initial-scale=1" />
-                <link rel="icon" href="/favicon.ico" />
-            </Head>
+
             {loading ? (
                 <div className="position-absolute top-50 start-50">
                     <Spin size="large" className="">
@@ -160,6 +155,12 @@ export default function MovieDetails() {
                 </div>
             ) : <>
                 <section className="py-3">
+                    <Head>
+                        <title>TV Show</title>
+                        <meta name="description" content="Tmdb movies info" />
+                        <meta name="viewport" content="width=device-width, initial-scale=1" />
+                        <link rel="icon" href="/favicon.ico" />
+                    </Head>
                     <div className="card dashboard">
                         <Row justify={"space-around"} align={"middle"} className="pad-y" gutter={[10, 10]}
                             style={{ background: "linear-gradient(to bottom right, rgba(220.5, 220.5, 220.5, 1), rgba(220.5, 220.5, 220.5, 0.84))" }}>
