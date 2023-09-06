@@ -378,7 +378,7 @@ const Movies = () => {
                                         </div>
                                     </Col>)
                                 }) : <div className="position-absolute top-25" style={{ left: "23rem" }}>
-                                    <Result title="No items were found that match your query." />
+                                    {setTimeout(<Result title="No items were found that match your query." />, 1000)}
                                 </div>}
                             </Row>
                         </Col>
