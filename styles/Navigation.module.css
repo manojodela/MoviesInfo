@@ -1,0 +1,17 @@
+.navbar {
+  background-color: #001529 !important;
+  padding: 0 !important;
+}
+
+.brand {
+  color: white;
+  font-weight: bold;
+  font-size: 1.5rem;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.brand:hover {
+  color: #1890ff;
+  text-decoration: none;
+}
