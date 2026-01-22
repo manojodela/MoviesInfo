@@ -242,6 +242,51 @@ button.slick-arrow.slick-next {
 
 }
 
+/* Navigation hover effects */
+.navbar-nav .nav-link {
+  transition: color 0.3s ease, background-color 0.3s ease;
+  position: relative;
+}
 
+.navbar-nav .nav-link:hover {
+  color: #1890ff !important;
+}
+
+.navbar-nav .nav-link:focus {
+  color: #1890ff !important;
+}
+
+/* Dropdown menu styling */
+.dropdown-menu {
+  border: none;
+  background-color: #0a0e27;
+  border-radius: 0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.dropdown-menu .dropdown-item {
+  color: #ccc;
+  transition: all 0.3s ease;
+}
+
+.dropdown-menu .dropdown-item:hover {
+  background-color: #1890ff;
+  color: white;
+}
+
+.dropdown-menu .dropdown-item:focus {
+  background-color: #1890ff;
+  color: white;
+}
+
+/* Search button hover effect */
+.btn-outline-light {
+  transition: all 0.3s ease;
+}
+
+.btn-outline-light:hover {
+  background-color: #1890ff;
+  border-color: #1890ff;
+}
 
 @import url('https://fonts.googleapis.com/css2?family=Fauna+One&family=Fraunces:opsz,wght@9..144,700&family=Montserrat:wght@500;700&family=Poppins:wght@300&display=swap');
