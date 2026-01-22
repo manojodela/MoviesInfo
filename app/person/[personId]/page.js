@@ -174,5 +174,5 @@ export default function PersonDetailPage({ params }) {
   );
 }
 
-// ISR - Cache for 24 hours
-export const revalidate = 86400;
+// SSR - Always fetch fresh data to avoid ISR revalidation errors on Netlify
+export const revalidate = 0;

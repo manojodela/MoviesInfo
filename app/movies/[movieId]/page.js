@@ -83,16 +83,28 @@ async function MovieDetails({ movieId }) {
     const writers = credits?.crew?.filter(c => c.job === 'Writer').map(w => w.name) || [];
     const cast = credits?.cast?.slice(0, 6) || [];
 
+    // Defensive checks for required data
+    if (!movie.title) {
+      console.error('Movie title is missing:', movie);
+      notFound();
+    }
+
     return (
       <div>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '40px', marginBottom: '50px' }}>
           {/* Poster */}
           <div>
-            <img
-              alt={movie.title}
-              src={getTMDBImageUrl(movie.poster_path, 'w500')}
-              style={{ width: '100%', borderRadius: '12px', boxShadow: '0 8px 24px rgba(0,0,0,0.15)' }}
-            />
+            {movie.poster_path ? (
+              <img
+                alt={movie.title}
+                src={getTMDBImageUrl(movie.poster_path, 'w500')}
+                style={{ width: '100%', borderRadius: '12px', boxShadow: '0 8px 24px rgba(0,0,0,0.15)' }}
+              />
+            ) : (
+              <div style={{ width: '100%', height: '500px', backgroundColor: '#f0f0f0', borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <span style={{ color: '#999' }}>No poster available</span>
+              </div>
+            )}
           </div>
 
           {/* Details */}
@@ -300,5 +312,5 @@ export default function MovieDetailPage({ params }) {
   );
 }
 
-// ISR - Cache for 24 hours
-export const revalidate = 86400;
+// SSR - Always fetch fresh data to avoid ISR revalidation errors on Netlify
+export const revalidate = 0;

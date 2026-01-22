@@ -63,6 +63,67 @@ The old `netlify.toml` had a catch-all SPA redirect that sent all requests to `/
 
 ---
 
+## How to Debug 500 Errors on Netlify
+
+### 1. Check Netlify Logs
+Go to your Netlify site:
+- **Build logs**: Site settings → Deploys → [Latest] → View deploy log
+- **Function logs**: Click on "Functions" tab (or check terminal output during deploy)
+- **Runtime logs**: Check the browser console (F12 → Console tab) for client-side errors
+
+### 2. Test Locally
+```bash
+# Build production version locally
+npm run build
+
+# Run production build locally
+npm start
+
+# Visit http://localhost:3000 and test the detail pages
+# Check browser console for errors
+# Check terminal output for server errors
+```
+
+### 3. Common 500 Error Causes
+
+#### Issue: TMDB API Key Missing
+- **Symptom**: "TMDB_API_KEY environment variable is not set"
+- **Solution**: 
+  1. Go to Netlify Site Settings → Environment
+  2. Add `TMDB_API_KEY` (get from https://www.themoviedb.org/settings/api)
+  3. Redeploy
+
+#### Issue: API Request Fails
+- **Symptom**: Error in detail pages (movies/[movieId], tv/[tvId])
+- **Solution**:
+  1. Check if TMDB API is responding (test in Postman/curl)
+  2. Verify API key is valid
+  3. Check if rate limit is reached
+
+#### Issue: Null/Undefined Data
+- **Symptom**: Page crashes when accessing movie.poster_path
+- **Solution**: Already fixed with defensive checks - ensure file is up to date
+
+### 4. Enable Debug Logging
+The `/api/debug` endpoint shows:
+```bash
+curl https://your-site.netlify.app/api/debug
+```
+
+Expected response:
+```json
+{
+  "environment": {
+    "hasApiKey": true,
+    "hasApiUrl": true,
+    "nodeEnv": "production",
+    "apiUrl": "https://api.themoviedb.org/3"
+  }
+}
+```
+
+---
+
 ## Deployment Steps
 
 ### Local Setup

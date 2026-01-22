@@ -5,6 +5,9 @@
  * Usage: /api/movies?page=1&sort_by=popularity.desc
  */
 
+// Mark this route as dynamic
+export const dynamic = 'force-dynamic';
+
 export async function GET(request) {
   try {
     const { searchParams } = new URL(request.url);

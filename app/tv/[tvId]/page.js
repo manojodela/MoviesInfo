@@ -77,16 +77,28 @@ async function TVShowDetails({ tvId }) {
     const cast = credits?.cast?.slice(0, 6) || [];
     const recommendations = recommendationsData?.results?.filter(show => show.poster_path) || [];
 
+    // Defensive checks for required data
+    if (!tv.name) {
+      console.error('TV show name is missing:', tv);
+      notFound();
+    }
+
     return (
       <div>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: '24px', marginBottom: '40px' }}>
           {/* Poster */}
           <div>
-            <img
-              alt={tv.name}
-              src={getTMDBImageUrl(tv.poster_path, 'w500')}
-              style={{ width: '100%', borderRadius: '8px' }}
-            />
+            {tv.poster_path ? (
+              <img
+                alt={tv.name}
+                src={getTMDBImageUrl(tv.poster_path, 'w500')}
+                style={{ width: '100%', borderRadius: '8px' }}
+              />
+            ) : (
+              <div style={{ width: '100%', height: '500px', backgroundColor: '#f0f0f0', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <span style={{ color: '#999' }}>No poster available</span>
+              </div>
+            )}
           </div>
 
           {/* Details */}
@@ -191,5 +203,5 @@ export default function TVShowDetailPage({ params }) {
   );
 }
 
-// ISR - Cache for 24 hours
-export const revalidate = 86400;
+// SSR - Always fetch fresh data to avoid ISR revalidation errors on Netlify
+export const revalidate = 0;
