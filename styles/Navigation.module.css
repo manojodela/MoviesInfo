@@ -15,3 +15,50 @@
   color: #1890ff;
   text-decoration: none;
 }
+
+/* Navigation link hover effects */
+:global(.navbar-nav .nav-link) {
+  transition: color 0.3s ease, background-color 0.3s ease;
+  position: relative;
+}
+
+:global(.navbar-nav .nav-link:hover) {
+  color: #1890ff !important;
+}
+
+:global(.navbar-nav .nav-link:focus) {
+  color: #1890ff !important;
+}
+
+/* Dropdown menu styling */
+:global(.dropdown-menu) {
+  border: none;
+  background-color: #0a0e27;
+  border-radius: 0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+:global(.dropdown-menu .dropdown-item) {
+  color: #ccc;
+  transition: all 0.3s ease;
+}
+
+:global(.dropdown-menu .dropdown-item:hover) {
+  background-color: #1890ff;
+  color: white;
+}
+
+:global(.dropdown-menu .dropdown-item:focus) {
+  background-color: #1890ff;
+  color: white;
+}
+
+/* Search button hover effect */
+:global(.btn-outline-light) {
+  transition: all 0.3s ease;
+}
+
+:global(.btn-outline-light:hover) {
+  background-color: #1890ff;
+  border-color: #1890ff;
+}
