@@ -28,7 +28,7 @@ export async function GET(request) {
       {
         headers: {
           'Authorization': `Bearer ${process.env.TMDB_API_KEY}`,
-          'Content-Type': 'application/json', 
+          'Content-Type': 'application/json',
         },
         next: { revalidate: 3600 }, // Cache for 1 hour
       }
