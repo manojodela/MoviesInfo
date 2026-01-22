@@ -53,6 +53,12 @@ export async function generateMetadata({ params }) {
 
 async function MovieDetails({ movieId }) {
   try {
+    // Validate movieId format
+    if (!movieId || isNaN(movieId)) {
+      console.error('Invalid movieId:', movieId);
+      notFound();
+    }
+
     // Fetch all data with individual error handling for debugging
     const movie = await getMovieDetails(movieId).catch(err => {
       console.error(`Error fetching movie ${movieId}:`, err);
