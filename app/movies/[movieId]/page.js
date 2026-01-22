@@ -312,5 +312,12 @@ export default function MovieDetailPage({ params }) {
   );
 }
 
-// SSR - Always fetch fresh data to avoid ISR revalidation errors on Netlify
-export const revalidate = 0;
+// Allow dynamic params for any movie ID
+export async function generateStaticParams() {
+  // Return empty array to allow all movie IDs dynamically
+  return [];
+}
+
+// Use on-demand ISR - revalidate after 24 hours
+export const revalidate = 86400;
+export const dynamicParams = true;
