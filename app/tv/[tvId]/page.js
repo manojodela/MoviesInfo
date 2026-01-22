@@ -203,12 +203,9 @@ export default function TVShowDetailPage({ params }) {
   );
 }
 
-// Allow dynamic params for any TV ID
-export async function generateStaticParams() {
-  // Return empty array to allow all TV IDs dynamically
-  return [];
-}
+// For Netlify: Use SSR instead of ISR (Netlify doesn't support dynamic ISR)
+// This ensures every request fetches fresh data
+export const revalidate = 0; // SSR - no caching
+export const dynamic = 'force-dynamic'; // Force server-side rendering
 
-// Use on-demand ISR - revalidate after 24 hours
-export const revalidate = 86400;
-export const dynamicParams = true;
+// generateStaticParams is not needed for SSR mode

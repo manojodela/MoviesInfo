@@ -4,9 +4,10 @@ import Pagination from '@/components/Pagination';
 import { discoverMovies } from '@/lib/tmdbClient';
 import { getTMDBImageUrl, formatVotePercentage, getVoteColor } from '@/lib/utils';
 
-// ISR: Now-playing movies - revalidate every 12 hours
-// This content changes frequently as movies finish their theater runs
-export const revalidate = 43200; // 12 hours
+// For Netlify: Use SSR for dynamic category pages
+// Netlify doesn't properly handle ISR with revalidate timings
+export const revalidate = 0; // SSR - no caching
+export const dynamic = 'force-dynamic';
 
 export const metadata = {
   title: 'Now Playing Movies - MoviesInfo',

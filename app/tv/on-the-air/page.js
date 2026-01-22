@@ -4,9 +4,10 @@ import Pagination from '@/components/Pagination';
 import { discoverTV } from '@/lib/tmdbClient';
 import { getTMDBImageUrl, formatVotePercentage, getVoteColor } from '@/lib/utils';
 
-// ISR: On the air - revalidate every 12 hours
-// Shows currently airing change frequently but not as fast as "airing today"
-export const revalidate = 43200; // 12 hours
+// For Netlify: Use SSR for category pages
+// Netlify doesn't properly support ISR caching strategies
+export const revalidate = 0; // SSR - no caching
+export const dynamic = 'force-dynamic';
 
 export const metadata = {
   title: 'On The Air TV Shows - MoviesInfo',

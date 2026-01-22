@@ -4,9 +4,10 @@ import Pagination from '@/components/Pagination';
 import { discoverMovies } from '@/lib/tmdbClient';
 import { getTMDBImageUrl, formatVotePercentage, getVoteColor } from '@/lib/utils';
 
-// ISR: Upcoming movies - revalidate every 24 hours
-// Upcoming content changes daily as movies approach release dates
-export const revalidate = 86400; // 24 hours
+// For Netlify: Use SSR for category pages
+// Netlify doesn't properly support ISR caching strategies
+export const revalidate = 0; // SSR - no caching
+export const dynamic = 'force-dynamic';
 
 export const metadata = {
   title: 'Upcoming Movies - MoviesInfo',
