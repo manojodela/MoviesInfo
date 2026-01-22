@@ -38,14 +38,14 @@ export default function Navigation() {
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item dropdown">
-              <a 
-                className="nav-link text-white dropdown-toggle" 
-                href="#"
+              <button 
+                className="nav-link text-white dropdown-toggle bg-transparent border-0"
+                style={{ cursor: 'pointer' }}
                 onMouseEnter={() => setShowMoviesDropdown(true)}
                 onMouseLeave={() => setShowMoviesDropdown(false)}
               >
                 Movies
-              </a>
+              </button>
               {showMoviesDropdown && (
                 <ul 
                   className="dropdown-menu show"
@@ -61,14 +61,14 @@ export default function Navigation() {
               )}
             </li>
             <li className="nav-item dropdown">
-              <a 
-                className="nav-link text-white dropdown-toggle" 
-                href="#"
+              <button 
+                className="nav-link text-white dropdown-toggle bg-transparent border-0"
+                style={{ cursor: 'pointer' }}
                 onMouseEnter={() => setShowTVDropdown(true)}
                 onMouseLeave={() => setShowTVDropdown(false)}
               >
                 TV Shows
-              </a>
+              </button>
               {showTVDropdown && (
                 <ul 
                   className="dropdown-menu show"
