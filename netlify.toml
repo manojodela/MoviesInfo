@@ -1,11 +1,11 @@
 [build]
   command = "npm run build"
-  publish = ".next/static"
+  publish = ".next"
   functions = "netlify/functions"
 
 [context.production]
   command = "npm run build"
-  publish = ".next/static"
+  publish = ".next"
 
 # Environment variables
 [build.environment]
