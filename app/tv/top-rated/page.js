@@ -4,10 +4,8 @@ import Pagination from '@/components/Pagination';
 import { discoverTV } from '@/lib/tmdbClient';
 import { getTMDBImageUrl, formatVotePercentage, getVoteColor } from '@/lib/utils';
 
-// For Netlify: Use SSR for category pages
-// Netlify doesn't properly support ISR caching strategies
-export const revalidate = 0; // SSR - no caching
-export const dynamic = 'force-dynamic';
+// ISR: Top-rated TV shows - revalidate every 7 days
+export const revalidate = 604800; // 7 days
 
 export const metadata = {
   title: 'Top Rated TV Shows - MoviesInfo',

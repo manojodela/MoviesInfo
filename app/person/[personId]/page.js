@@ -174,9 +174,25 @@ export default function PersonDetailPage({ params }) {
   );
 }
 
-// For Netlify: Use SSR instead of ISR (Netlify doesn't support dynamic ISR)
-// This ensures every request fetches fresh data
-export const revalidate = 0; // SSR - no caching
-export const dynamic = 'force-dynamic'; // Force server-side rendering
+// For Netlify: Pre-generate popular people at build time
+export async function generateStaticParams() {
+  try {
+    const { getTrendingPeople } = await import('@/lib/tmdbClient');
+    
+    // Fetch trending people to pre-generate pages
+    const peopleData = await getTrendingPeople({ page: 1 });
+    const people = peopleData.results || [];
+    
+    // Generate params for the first 20 trending people
+    return people.slice(0, 20).map((person) => ({
+      personId: String(person.id),
+    }));
+  } catch (error) {
+    console.error('Error generating static params:', error);
+    return [];
+  }
+}
 
-// generateStaticParams is not needed for SSR mode
+// Use ISR with revalidation - pages revalidate every 24 hours
+export const revalidate = 86400; // 24 hours
+export const dynamicParams = true; // Allow dynamic params for pages not pre-generated

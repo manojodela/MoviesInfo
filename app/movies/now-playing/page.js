@@ -4,10 +4,8 @@ import Pagination from '@/components/Pagination';
 import { discoverMovies } from '@/lib/tmdbClient';
 import { getTMDBImageUrl, formatVotePercentage, getVoteColor } from '@/lib/utils';
 
-// For Netlify: Use SSR for dynamic category pages
-// Netlify doesn't properly handle ISR with revalidate timings
-export const revalidate = 0; // SSR - no caching
-export const dynamic = 'force-dynamic';
+// ISR: Now-playing movies - revalidate every 12 hours
+export const revalidate = 43200; // 12 hours
 
 export const metadata = {
   title: 'Now Playing Movies - MoviesInfo',

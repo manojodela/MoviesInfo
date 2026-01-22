@@ -3,10 +3,8 @@ import Link from 'next/link';
 import { discoverMovies, discoverTV, getTrendingPeople } from '@/lib/tmdbClient';
 import { getTMDBImageUrl, formatVotePercentage } from '@/lib/utils';
 
-// For Netlify: Use SSR for homepage
-// Netlify doesn't properly support ISR caching strategies
-export const revalidate = 0; // SSR - no caching
-export const dynamic = 'force-dynamic';
+// ISR: Static Generation for homepage - regenerate every 24 hours
+export const revalidate = 86400; // 24 hours
 
 export const metadata = {
   title: 'MoviesInfo - Discover Movies & TV Shows',

@@ -203,9 +203,25 @@ export default function TVShowDetailPage({ params }) {
   );
 }
 
-// For Netlify: Use SSR instead of ISR (Netlify doesn't support dynamic ISR)
-// This ensures every request fetches fresh data
-export const revalidate = 0; // SSR - no caching
-export const dynamic = 'force-dynamic'; // Force server-side rendering
+// For Netlify: Pre-generate popular TV shows at build time
+export async function generateStaticParams() {
+  try {
+    const { discoverTV } = await import('@/lib/tmdbClient');
+    
+    // Fetch popular TV shows to pre-generate pages
+    const tvData = await discoverTV({ page: 1 });
+    const shows = tvData.results || [];
+    
+    // Generate params for the first 20 popular TV shows
+    return shows.slice(0, 20).map((show) => ({
+      tvId: String(show.id),
+    }));
+  } catch (error) {
+    console.error('Error generating static params:', error);
+    return [];
+  }
+}
 
-// generateStaticParams is not needed for SSR mode
+// Use ISR with revalidation - pages revalidate every 24 hours
+export const revalidate = 86400; // 24 hours
+export const dynamicParams = true; // Allow dynamic params for pages not pre-generated

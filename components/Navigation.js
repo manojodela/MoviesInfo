@@ -1,15 +1,21 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import styles from '@/styles/Navigation.module.css';
 
 export default function Navigation() {
+  const [mounted, setMounted] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [showMoviesDropdown, setShowMoviesDropdown] = useState(false);
   const [showTVDropdown, setShowTVDropdown] = useState(false);
   const router = useRouter();
+
+  // Ensure component is mounted on client before rendering dynamic content
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -31,6 +37,9 @@ export default function Navigation() {
           type="button" 
           data-bs-toggle="collapse" 
           data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
         >
           <span className="navbar-toggler-icon" />
         </button>
@@ -43,10 +52,11 @@ export default function Navigation() {
                 style={{ cursor: 'pointer' }}
                 onMouseEnter={() => setShowMoviesDropdown(true)}
                 onMouseLeave={() => setShowMoviesDropdown(false)}
+                type="button"
               >
                 Movies
               </button>
-              {showMoviesDropdown && (
+              {mounted && showMoviesDropdown && (
                 <ul 
                   className="dropdown-menu show"
                   onMouseEnter={() => setShowMoviesDropdown(true)}
@@ -66,10 +76,11 @@ export default function Navigation() {
                 style={{ cursor: 'pointer' }}
                 onMouseEnter={() => setShowTVDropdown(true)}
                 onMouseLeave={() => setShowTVDropdown(false)}
+                type="button"
               >
                 TV Shows
               </button>
-              {showTVDropdown && (
+              {mounted && showTVDropdown && (
                 <ul 
                   className="dropdown-menu show"
                   onMouseEnter={() => setShowTVDropdown(true)}
@@ -95,6 +106,7 @@ export default function Navigation() {
               placeholder="Search..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
+              aria-label="Search movies or shows"
             />
             <button className="btn btn-outline-light" type="submit">
               Search

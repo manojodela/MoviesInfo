@@ -318,9 +318,27 @@ export default function MovieDetailPage({ params }) {
   );
 }
 
-// For Netlify: Use SSR instead of ISR (Netlify doesn't support dynamic ISR)
-// This ensures every request fetches fresh data
-export const revalidate = 0; // SSR - no caching
-export const dynamic = 'force-dynamic'; // Force server-side rendering
+// For Netlify: Pre-generate popular movies at build time
+export async function generateStaticParams() {
+  try {
+    // Import the client to fetch popular movies
+    const { discoverMovies } = await import('@/lib/tmdbClient');
+    
+    // Fetch popular movies to pre-generate pages
+    const moviesData = await discoverMovies({ page: 1 });
+    const movies = moviesData.results || [];
+    
+    // Generate params for the first 20 popular movies
+    return movies.slice(0, 20).map((movie) => ({
+      movieId: String(movie.id),
+    }));
+  } catch (error) {
+    console.error('Error generating static params:', error);
+    // Return empty array to use on-demand ISR
+    return [];
+  }
+}
 
-// generateStaticParams is not needed for SSR mode
+// Use ISR with revalidation - pages revalidate every 24 hours
+export const revalidate = 86400; // 24 hours
+export const dynamicParams = true; // Allow dynamic params for pages not pre-generated
