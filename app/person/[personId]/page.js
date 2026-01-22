@@ -173,3 +173,6 @@ export default function PersonDetailPage({ params }) {
     </Suspense>
   );
 }
+
+// ISR - Cache for 24 hours
+export const revalidate = 86400;

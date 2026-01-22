@@ -53,20 +53,35 @@ export async function generateMetadata({ params }) {
 
 async function MovieDetails({ movieId }) {
   try {
-    const [movie, credits, keywords, recommendations] = await Promise.all([
-      getMovieDetails(movieId),
-      getMovieCredits(movieId),
-      getMovieKeywords(movieId),
-      getMovieRecommendations(movieId),
-    ]);
+    // Fetch all data with individual error handling for debugging
+    const movie = await getMovieDetails(movieId).catch(err => {
+      console.error(`Error fetching movie ${movieId}:`, err);
+      throw err;
+    });
 
     if (!movie || movie.status_code === 34) {
       notFound();
     }
 
-    const directors = credits.crew?.filter(c => c.job === 'Director').map(d => d.name) || [];
-    const writers = credits.crew?.filter(c => c.job === 'Writer').map(w => w.name) || [];
-    const cast = credits.cast?.slice(0, 6) || [];
+    // Fetch other data in parallel, but don't fail if they error
+    const [credits, keywords, recommendations] = await Promise.all([
+      getMovieCredits(movieId).catch(err => {
+        console.error(`Error fetching credits for movie ${movieId}:`, err);
+        return { cast: [], crew: [] };
+      }),
+      getMovieKeywords(movieId).catch(err => {
+        console.error(`Error fetching keywords for movie ${movieId}:`, err);
+        return { keywords: [] };
+      }),
+      getMovieRecommendations(movieId).catch(err => {
+        console.error(`Error fetching recommendations for movie ${movieId}:`, err);
+        return { results: [] };
+      }),
+    ]);
+
+    const directors = credits?.crew?.filter(c => c.job === 'Director').map(d => d.name) || [];
+    const writers = credits?.crew?.filter(c => c.job === 'Writer').map(w => w.name) || [];
+    const cast = credits?.cast?.slice(0, 6) || [];
 
     return (
       <div>
@@ -284,3 +299,6 @@ export default function MovieDetailPage({ params }) {
     </Suspense>
   );
 }
+
+// ISR - Cache for 24 hours
+export const revalidate = 86400;

@@ -1,6 +1,44 @@
 # Deployment Troubleshooting Guide
 
-## Blank Screen on Page Refresh
+## 500 Internal Server Error on Page Refresh
+
+### Root Cause
+After fixing the blank screen issue, the app was returning 500 errors on dynamic page refreshes (e.g., `/movies/123`). This was caused by:
+1. Environment variables not being available at module load time
+2. API call failures not being gracefully handled
+3. Missing ISR revalidation configuration on dynamic routes
+
+### ✅ Solutions Applied
+
+#### 1. Fixed Environment Variable Handling in `lib/tmdbClient.js`
+- Removed throwing error at module load time
+- Moved validation to `fetchFromTMDB()` runtime function
+- Added fallback for `TMDB_API_BASE_URL` to default URL
+- Provides better error messages if API key is missing at runtime
+
+#### 2. Improved Error Handling in Dynamic Pages
+All detail pages (`/movies/[movieId]`, `/tv/[tvId]`, `/person/[personId]`) now:
+- Fetch main content first, fail if not found
+- Fetch additional data with individual error handling
+- Return graceful fallbacks (empty arrays) if secondary data fails
+- Log detailed errors for debugging
+- Have proper Suspense boundaries and error.js boundaries
+
+#### 3. Added ISR Configuration to Dynamic Routes
+```javascript
+// app/movies/[movieId]/page.js
+export const revalidate = 86400; // 24 hours ISR
+```
+
+#### 4. Debug Endpoint
+Access `/api/debug` to check if environment variables are loaded:
+```bash
+curl https://your-site.netlify.app/api/debug
+```
+
+---
+
+## Blank Screen on Page Refresh (PREVIOUSLY FIXED)
 
 ### Root Cause
 The old `netlify.toml` had a catch-all SPA redirect that sent all requests to `/index.html`, which broke Next.js App Router's server-side routing.
@@ -9,7 +47,7 @@ The old `netlify.toml` had a catch-all SPA redirect that sent all requests to `/
 
 #### 1. Updated `netlify.toml`
 - Removed SPA redirect (`from = "/*" to = "/index.html"`)
-- Set proper build output: `.next/static`
+- Set proper build output: `.next` (not `.next/static`)
 - Added cache headers for static assets
 - Added security headers
 - Configured environment variables

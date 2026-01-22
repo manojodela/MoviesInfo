@@ -52,17 +52,29 @@ export async function generateMetadata({ params }) {
 
 async function TVShowDetails({ tvId }) {
   try {
-    const [tv, credits, recommendationsData] = await Promise.all([
-      getTVDetails(tvId),
-      getTVCredits(tvId),
-      getTVRecommendations(tvId),
-    ]);
+    // Fetch main data first
+    const tv = await getTVDetails(tvId).catch(err => {
+      console.error(`Error fetching TV show ${tvId}:`, err);
+      throw err;
+    });
 
     if (!tv || tv.status_code === 34) {
       notFound();
     }
 
-    const cast = credits.cast?.slice(0, 6) || [];
+    // Fetch additional data in parallel with fallbacks
+    const [credits, recommendationsData] = await Promise.all([
+      getTVCredits(tvId).catch(err => {
+        console.error(`Error fetching credits for TV show ${tvId}:`, err);
+        return { cast: [] };
+      }),
+      getTVRecommendations(tvId).catch(err => {
+        console.error(`Error fetching recommendations for TV show ${tvId}:`, err);
+        return { results: [] };
+      }),
+    ]);
+
+    const cast = credits?.cast?.slice(0, 6) || [];
     const recommendations = recommendationsData?.results?.filter(show => show.poster_path) || [];
 
     return (
@@ -178,3 +190,6 @@ export default function TVShowDetailPage({ params }) {
     </Suspense>
   );
 }
+
+// ISR - Cache for 24 hours
+export const revalidate = 86400;
